@@ -12,7 +12,6 @@ $(function()
 {
     var feedElement = '.feed';
     var entryElement = '.entry';
-    var slideMenuElement = '.slide-menu';
     var menuHiddenClass = 'menu-hidden';
     var menuIconElement = 'a.menu-icon-link';
 
@@ -165,9 +164,6 @@ $(function()
         }
         else
         {
-            /**
-            there has to be at least one feed to run this test
-            */
             it('cannot run test because it requires at least 1 feed, there are ' + allFeeds.length, function()
             {
                 expect(allFeeds.length).toBeGreaterThan(0);
@@ -215,9 +211,6 @@ $(function()
         }
         else
         {
-            /**
-                there has to be at least two feeds to run this test
-            */
             it('cannot run test because it requires at least 2 feeds, there are ' + allFeeds.length, function()
             {
                 expect(allFeeds.length).toBeGreaterThan(1);
