@@ -24,6 +24,8 @@ $(function()
     */
     describe('RSS Feeds', function()
     {
+        var i;
+
         /* This is our first test - it tests to make sure that the
          * allFeeds variable has been defined and that it is not
          * empty. Experiment with this before you get started on
@@ -46,7 +48,7 @@ $(function()
         {
             it('feed ' + index + ' has a URL', function()
             {
-                if (url != null)
+                if (url !== null)
                 {
                     url = url.trim();
                 }
@@ -55,7 +57,7 @@ $(function()
             });
         };
 
-        for (var i = 0; i < allFeeds.length; i++)
+        for (i = 0; i < allFeeds.length; i++)
         {
             feed_has_url(i, allFeeds[i].url);
         }
@@ -68,7 +70,7 @@ $(function()
         {
             it('feed ' + index + ' has a name', function()
             {
-                if (name != null)
+                if (name !== null)
                 {
                     name = name.trim();
                 }
@@ -77,7 +79,7 @@ $(function()
             });
         };
 
-        for (var i = 0; i < allFeeds.length; i++)
+        for (i = 0; i < allFeeds.length; i++)
         {
             feed_has_name(i, allFeeds[i].name);
         }
@@ -218,7 +220,7 @@ $(function()
 
             it('results in new content within the feed container', function(done)
             {
-                expect(allFeeds)
+                expect(allFeeds);
                 expect(newFeed).not.toBe(currentFeed);
                 done();
             });
