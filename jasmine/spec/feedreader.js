@@ -12,11 +12,9 @@ $(function()
 {
     var feedElement = '.feed';
     var entryElement = '.entry';
-    var feedEntryElement = feedElement + ' ' + entryElement;
     var slideMenuElement = '.slide-menu';
     var menuHiddenClass = 'menu-hidden';
-    var menuIconElement = $('a.menu-icon-link');
-    var cssTransform = 'transform';
+    var menuIconElement = 'a.menu-icon-link';
 
     /* This is our first test suite - a test suite just contains
     * a related set of tests. This suite is all about the RSS
@@ -48,12 +46,17 @@ $(function()
         {
             it('feed ' + index + ' has a URL', function()
             {
-                if (url !== null)
+                if (url === null)
+                {
+                    url = '';
+                }
+                else
                 {
                     url = url.trim();
                 }
+
                 expect(url).toBeDefined();
-                expect(url).not.toBe(null || '');
+                expect(url).not.toBe('');
             });
         };
 
@@ -89,20 +92,13 @@ $(function()
     /* TODO: Write a new test suite named 'The menu' */
     describe('The Menu', function()
     {
-         // determine expected value for css transform at init
-        console.log(cssTransform + ': ' + $(slideMenuElement).css(cssTransform));
-
-        var cssMenuHidden = 'matrix(1, 0, 0, 1, -192, 0)';
-
-        /* TODO: Write a test that ensures the menu element is
+         /* TODO: Write a test that ensures the menu element is
          * hidden by default. You'll have to analyze the HTML and
          * the CSS to determine how we're performing the
          * hiding/showing of the menu element.
          */
         it('is hidden on load', function()
         {
-            // Check css transform property
-            expect($(slideMenuElement).css(cssTransform)).toBe(cssMenuHidden);
             // menu is hidden if body has this class
             expect($(document.body).hasClass(menuHiddenClass)).toBe(true);
         });
@@ -110,38 +106,25 @@ $(function()
         /**
             These menu tests are nested because clicking the menu icon requires a wait function
         */
-        describe(', then the menu', function()
+        describe('then the icon click', function()
         {
-            /**
-                Give the browser a half second to render the display when menu icon is clicked
-            */
-            beforeEach(function(done)
-            {
-                menuIconElement.click();
-                setTimeout(done, 500);
-            });
-
              /* TODO: Write a test that ensures the menu changes
               * visibility when the menu icon is clicked. This test
               * should have two expectations: does the menu display when
               * clicked and does it hide when clicked again.
               */
-            it('icon click after load displays menu', function(done)
+            it('after load displays menu', function()
             {
-                // Check css transform property
-                expect($(slideMenuElement).css(cssTransform)).not.toBe(cssMenuHidden);
+                 $(menuIconElement).click();
                 // menu is hidden if body has this class
                 expect($(document.body).hasClass(menuHiddenClass)).toBe(false);
-                done();
             });
 
-            it('icon click while menu displayed hides menu', function(done)
+            it('while menu displayed hides menu', function()
             {
-                // Check css transform property
-                expect($(slideMenuElement).css(cssTransform)).toBe(cssMenuHidden);
+                $(menuIconElement).click();
                 // menu is hidden if body has this class
                 expect($(document.body).hasClass(menuHiddenClass)).toBe(true);
-                done();
             });
         });
     });
@@ -150,80 +133,95 @@ $(function()
     describe('Initial Entries', function()
     {
         /**
-            there has to be at least one feed to run this test
+            don't run the test if there isn't at least one feed to load
         */
-        it('(requires at least 1 feed, there are ' + allFeeds.length + ')', function()
+        if (allFeeds.length > 0)
         {
-            expect(allFeeds.length).toBeGreaterThan(0);
-        });
-
-        describe('', function()
-        {
-             /* TODO: Write a test that ensures when the loadFeed
-             * function is called and completes its work, there is at least
-             * a single .entry element within the .feed container.
-             * Remember, loadFeed() is asynchronous so this test will require
-             * the use of Jasmine's beforeEach and asynchronous done() function.
-             */
-            beforeEach(function(done)
+            describe('', function()
             {
-                // make sure feed is empty
-                $(feedElement).html('');
-
-                loadFeed(allFeeds.length - 1, function()
+                 /* TODO: Write a test that ensures when the loadFeed
+                 * function is called and completes its work, there is at least
+                 * a single .entry element within the .feed container.
+                 * Remember, loadFeed() is asynchronous so this test will require
+                 * the use of Jasmine's beforeEach and asynchronous done() function.
+                 */
+                beforeEach(function(done)
                 {
+                    // make sure feed is empty
+                    $(feedElement).html('');
+
+                    loadFeed(allFeeds.length - 1, function()
+                    {
+                        done();
+                    });
+                });
+
+                it('there is at least one entry within the feed container', function(done)
+                {
+                    expect($(feedElement + ' ' + entryElement).length).toBeGreaterThan(0);
                     done();
                 });
             });
-
-            it('there is at least one entry within the feed container', function(done)
+        }
+        else
+        {
+            /**
+            there has to be at least one feed to run this test
+            */
+            it('cannot run test because it requires at least 1 feed, there are ' + allFeeds.length, function()
             {
-                expect($(feedEntryElement).length).toBeGreaterThan(0);
-                done();
+                expect(allFeeds.length).toBeGreaterThan(0);
             });
-        });
+        }
     });
 
     /* TODO: Write a new test suite named 'New Feed Selection' */
     describe('New Feed Selection', function()
     {
         /**
-            there has to be at least two feeds to run this test
+            don't run the test if there aren't at least two feeds to compare
         */
-        it('(requires at least 2 feeds, there are ' + allFeeds.length + ')', function()
+        if (allFeeds.length > 1)
         {
-            expect(allFeeds.length).toBeGreaterThan(1);
-        });
-
-        describe('', function()
-        {
-            var currentFeed, newFeed;
-
-            /* TODO: Write a test that ensures when a new feed is loaded
-             * by the loadFeed function that the content actually changes.
-             * Remember, loadFeed() is asynchronous.
-             */
-            beforeEach(function(done)
+            describe('', function()
             {
-                loadFeed(0, function()
+                var currentFeed, newFeed;
+
+                /* TODO: Write a test that ensures when a new feed is loaded
+                 * by the loadFeed function that the content actually changes.
+                 * Remember, loadFeed() is asynchronous.
+                 */
+                beforeEach(function(done)
                 {
-                    currentFeed = $(feedElement).html();
-                    done();
+                    currentFeed = '';
+                    newFeed = '';
+
+                    loadFeed(0, function()
+                    {
+                        currentFeed = $(feedElement).html();
+                        loadFeed(allFeeds.length - 1, function()
+                        {
+                            newFeed = $(feedElement).html();
+                            done();
+                        });
+                    });
                 });
 
-                loadFeed(allFeeds.length - 1, function()
+                it('results in new content within the feed container', function()
                 {
-                    newFeed = $(feedElement).html();
-                    done();
+                    expect(newFeed).not.toBe(currentFeed);
                 });
             });
-
-            it('results in new content within the feed container', function(done)
+        }
+        else
+        {
+            /**
+                there has to be at least two feeds to run this test
+            */
+            it('cannot run test because it requires at least 2 feeds, there are ' + allFeeds.length, function()
             {
-                expect(allFeeds);
-                expect(newFeed).not.toBe(currentFeed);
-                done();
+                expect(allFeeds.length).toBeGreaterThan(1);
             });
-        });
+        }
     });
 }());
