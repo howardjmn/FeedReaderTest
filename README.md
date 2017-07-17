@@ -6,7 +6,7 @@ The application allows the user to select a feed, then displays a list of articl
 
 A jasmine test suite is executed when the page is loaded, and the results are displayed at the bottom of the page.
 
-The application can be run directly from the [GitHub Repository](https://rawgit.com/howardjmn/FeedReaderTest/master/index.html)
+The application can be run directly from the [GitHub Repository](http://rawgit.com/howardjmn/FeedReaderTest/master/index.html)
 
 
 You can also run it locally by downloading the repository to a folder on your computer, then opening the index.html file in the web browser of your choice.
