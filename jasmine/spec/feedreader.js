@@ -41,7 +41,7 @@ $(function()
          * in the allFeeds object and ensures it has a URL defined
          * and that the URL is not empty.
          */
-        feed_has_url = function(index, url)
+        var feedHasUrl = function(index, url)
         {
             it('feed ' + index + ' has a URL', function()
             {
@@ -52,14 +52,14 @@ $(function()
 
         for (i = 0; i < allFeeds.length; i++)
         {
-            feed_has_url(i, allFeeds[i].url);
+            feedHasUrl(i, allFeeds[i].url);
         }
 
         /* TODO: Write a test that loops through each feed
          * in the allFeeds object and ensures it has a name defined
          * and that the name is not empty.
          */
-        feed_has_name = function(index, name)
+        var feedHasName = function(index, name)
         {
             it('feed ' + index + ' has a name', function()
             {
@@ -70,7 +70,7 @@ $(function()
 
         for (i = 0; i < allFeeds.length; i++)
         {
-            feed_has_name(i, allFeeds[i].name);
+            feedHasName(i, allFeeds[i].name);
         }
     });
 
