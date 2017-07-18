@@ -45,15 +45,6 @@ $(function()
         {
             it('feed ' + index + ' has a URL', function()
             {
-                if (url === null)
-                {
-                    url = '';
-                }
-                else
-                {
-                    url = url.trim();
-                }
-
                 expect(url).toBeDefined();
                 expect(url).not.toBe('');
             });
@@ -72,12 +63,8 @@ $(function()
         {
             it('feed ' + index + ' has a name', function()
             {
-                if (name !== null)
-                {
-                    name = name.trim();
-                }
                 expect(name).toBeDefined();
-                expect(name).not.toBe(null || '');
+                expect(name).not.toBe('');
             });
         };
 
@@ -131,44 +118,27 @@ $(function()
     /* TODO: Write a new test suite named 'Initial Entries' */
     describe('Initial Entries', function()
     {
-        /**
-            don't run the test if there isn't at least one feed to load
-        */
-        if (allFeeds.length > 0)
+        describe('', function()
         {
-            describe('', function()
+             /* TODO: Write a test that ensures when the loadFeed
+             * function is called and completes its work, there is at least
+             * a single .entry element within the .feed container.
+             * Remember, loadFeed() is asynchronous so this test will require
+             * the use of Jasmine's beforeEach and asynchronous done() function.
+             */
+            beforeEach(function(done)
             {
-                 /* TODO: Write a test that ensures when the loadFeed
-                 * function is called and completes its work, there is at least
-                 * a single .entry element within the .feed container.
-                 * Remember, loadFeed() is asynchronous so this test will require
-                 * the use of Jasmine's beforeEach and asynchronous done() function.
-                 */
-                beforeEach(function(done)
-                {
-                    // make sure feed is empty
-                    $(feedElement).html('');
+                // make sure feed is empty
+                $(feedElement).html('');
 
-                    loadFeed(allFeeds.length - 1, function()
-                    {
-                        done();
-                    });
-                });
-
-                it('there is at least one entry within the feed container', function(done)
-                {
-                    expect($(feedElement + ' ' + entryElement).length).toBeGreaterThan(0);
-                    done();
-                });
+                loadFeed(0, done);
             });
-        }
-        else
-        {
-            it('cannot run test because it requires at least 1 feed, there are ' + allFeeds.length, function()
+
+            it('there is at least one entry within the feed container', function()
             {
-                expect(allFeeds.length).toBeGreaterThan(0);
+                expect($(feedElement + ' ' + entryElement).length).toBeGreaterThan(0);
             });
-        }
+        });
     });
 
     /* TODO: Write a new test suite named 'New Feed Selection' */
